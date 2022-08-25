@@ -1,8 +1,19 @@
 import React from 'react';
+import { Routes, Route, Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [data, setData] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    fetch("/api")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) setData(data.message)
+      });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,7 +27,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          {data}
         </a>
       </header>
     </div>
